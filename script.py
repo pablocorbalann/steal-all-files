@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-PATH = "/home"
-OUTPUT = "example.zip"
+PATH = "default"
+OUTPUT = "default"
 MODE = "w"
 # This is the main script of the steal-all-files github repository.
 #
@@ -16,6 +16,7 @@ from rich.console import Console
 import sys
 import os
 import zipfile
+import platform
 
 console = Console()
 
@@ -87,6 +88,44 @@ def displaylicense():
     """
     f = readfile("LICENSE.md")
     console.print(Markdown(f))
+
+
+
+def systemis(system_to_check):
+    """
+    Get's the system (os) and returns True if the system is
+    :param system_to_check:
+
+    Parameters
+    ----------
+    system_to_check: str
+        The system that has to be checked
+    
+    Returns true if the system to be checked is the actual os
+    """
+    system = platform.system().lower()
+    return True if system == system_to_check else False
+
+
+
+def setuppath():
+    """
+    Set's up the path depending on the operative system the user is using.
+    """
+    global PATH
+    if PATH == "default":
+        PATH = "C://" if systemis("windows") else "/home"
+
+
+
+def setupoutput():
+    """
+    Set's up the output depending on the path
+    """
+    global OUTPUT, PATH
+    if OUTPUT == "default":
+       npath = PATH.replace("/", "_")
+       OUTPUT = f"{npath}.zip"
 
 
 
@@ -165,6 +204,8 @@ def readargs():
 
 
 if __name__ == "__main__":
+    setuppath()
+    setupoutput()
     readargs()
     console.print(f"Extracting {PATH} at {OUTPUT} - Press CTRL + C to stop the process.")
     z = zipfile.ZipFile(OUTPUT, MODE, zipfile.ZIP_DEFLATED) 
