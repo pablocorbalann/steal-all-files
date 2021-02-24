@@ -16,6 +16,18 @@ if ! program_exists "git"; then
   echo "Git is not installed in this computer, please install git..."
 fi
 
-git add .
-git commit -m "$1:$2"
-git push
+git pull
+
+# Run the tests for the application
+python3 test_script.py
+
+# asks the user if test have passed to then push
+read -p "Do you want to update the code in the GitHub repository? [y/N]: " confirm
+
+if [ "$confirm" == "y" ]; then
+  git add .
+  git commit -m "$1: $2"
+  git push
+fi
+
+echo "Deploy script ended..."
