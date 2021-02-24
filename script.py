@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-PATH = "~"
+PATH = "/home"
 OUTPUT = "example.zip"
 MODE = "w"
 # This is the main script of the steal-all-files github repository.
@@ -72,7 +72,7 @@ def displayhelp():
     """
     This function is used for displaying help and the commands about the application
 
-    For running this function use: -h --help
+    For running this function use: -h
     """
     f = readfile("README.md")
     console.print(Markdown(f))
@@ -80,16 +80,34 @@ def displayhelp():
 
 
 def displaylicense():
+    """
+    This function is used for displaying the License of this app.
+
+    For running this function use: -l
+    """
     f = readfile("LICENSE.md")
     console.print(Markdown(f))
 
 
 
 def zipdir(path, ziph):
-    # ziph is zipfile handle
+    """
+    This is the function that actually walks the directory and extracts the files
+    inside a ZipFile using the zipfile library.
+
+    Parameters
+    ----------
+    path: str
+        The relative or absolute path for the directory
+    ziph: zipfile.ZipFile
+        The zipfile handler
+    """
     for root, dirs, files in os.walk(path):
         for file in files:
-            ziph.write(os.path.join(root, file), os.path.relpath(os.path.join(root, file), os.path.join(path, '..')))
+            f = os.path.join(root, file) 
+            ziph.write(f, os.path.relpath(f, os.path.join(path, '..')))
+
+
 
 def isarg(arg, value=False):
     """
@@ -124,16 +142,31 @@ def readargs():
     """
     This function reads the arguments of the application using the system library to 
     display them and set up the global configuration variables using :func isarg:
+
+    This function does'nt take any parameters nor returns any value
     """
-    if isarg("-h")[0] or isarg("--help")[0]:
+    global PATH, OUTPUT
+    # Check out the flags
+    if isarg("-h")[0]:
         # The user simply wants to display some help and information about the program
         displayhelp()
         exitapp()
-    if isarg("-l")[0] or isarg("--license")[0]:
+    if isarg("-l")[0]:
         displaylicense()
         exitapp()
+    if isarg("-p", True)[0]:
+        PATH = isarg("-p", True)[1]
+    if isarg("-o", True)[0]:
+        o = isarg("-o", True)[1]
+        OUTPUT = f"{o}.zip"
+    if isarg("-rw")[0]:
+        MODE = ""
 
-def main():
+
+
+if __name__ == "__main__":
     readargs()
-
-main()
+    console.print(f"Extracting {PATH} at {OUTPUT} - Press CTRL + C to stop the process.")
+    z = zipfile.ZipFile(OUTPUT, MODE, zipfile.ZIP_DEFLATED) 
+    zipdir(PATH, z)
+    z.close()

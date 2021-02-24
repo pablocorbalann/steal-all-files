@@ -13,9 +13,11 @@ python script.py [options]
 
 Options:
 ```
--h --help: Displays help about the program
--l --license: Displays the license of this program
+-h: Displays help about the app
+-l: Displays the license of the app
+-p "path": The path to steal the files from (by default the root path of the system)
+-o "output": The name of the output file
+-rw: Removes writting permissions
 ```
-
 This program has been created JUST FOR EDUCATIONAL purposes. You can read the License
 of this program using the "-l" or "--license" flags when running it.
