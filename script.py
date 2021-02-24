@@ -75,8 +75,8 @@ def displayhelp():
 
     For running this function use: -h
     """
-    f = readfile("README.md")
-    console.print(Markdown(f))
+    f = readfile("help.txt")
+    print(f)
 
 
 

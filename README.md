@@ -11,8 +11,11 @@ Steal all files is a cybersecurity tool that has been designed with the purpose 
 ### Usage and options
 If you want to run the script **without using an USB device** (using the Python interpreter), you can type the following commands:
 ```shell
+# Clone the repository to your computer
 git clone https://github.com/pblcc/steal-all-files.git
+# Move inside the repository
 cd steal-all-files
+# Execute the script
 python script.py [options]
 ```
 And you can use the following options:
