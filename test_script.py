@@ -32,6 +32,8 @@ class TestScript(unittest.TestCase):
 
     def test_readfile(self): 
         files_to_check = [
+            "README.md",
+            "LICENSE.md",
             "help.txt"
         ]
         for file in files_to_check:

@@ -8,9 +8,7 @@
 #
 # For more information, visit: github.com/pblcc/steal-all-files (if you have access to it)
 
-program_exists() {
-  command -v "$1" &> /dev/null
-}
+. .scripts/funcs.sh
 
 if ! program_exists "git"; then
   echo "Git is not installed in this computer, please install git..."

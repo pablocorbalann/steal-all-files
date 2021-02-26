@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 PATH = "default"
 OUTPUT = "default"
 MODE = "w"
@@ -9,7 +10,6 @@ MODE = "w"
 # You can read the License for this script in the "LICENSE" file of this folder.
 #
 # For more information, visit: github.com/pblcc/steal-all-files (if you have access to it)
-from rich import print
 from rich.markdown import Markdown
 from rich.console import Console
 
@@ -38,7 +38,8 @@ def exitapp(**kwargs):
     # check if the user has actually used keywords
     keys = kwargs.keys()
     if "msg" in keys:
-        print(f"> {kwargs['msg']}")
+        k = kwargs["msg"]
+        print(k)
     code = 0 if "code" not in keys else kwargs["code"]
     sys.exit(0)
 
@@ -124,7 +125,7 @@ def setupoutput():
     """
     global OUTPUT, PATH
     if OUTPUT == "default":
-       npath = PATH.replace("/", "_")
+       npath = PATH.replace("/", "_")[1:]
        OUTPUT = f"{npath}.zip"
 
 
